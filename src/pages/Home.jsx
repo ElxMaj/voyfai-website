@@ -7,8 +7,7 @@ import PartnerCard from "../components/PartnerCard";
 import DetailSection from "../components/DetailSection";
 import TestimonialCard from "../components/TestimonialCard";
 import NorthernEuropeMap from "../components/NorthernEuropeMap";
-
-const heroImg = "/Voyfai-hero.jpg";
+import heroImg from "../assets/Voyfai-hero.jpg";
 
 export default function Home() {
   return (
@@ -17,7 +16,7 @@ export default function Home() {
       <header
         style={{
           position: "relative",
-          minHeight: "92vh",
+          minHeight: "100vh",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
