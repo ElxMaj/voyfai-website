@@ -1,0 +1,208 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+/* ─── ANIMATIONS ─────────────────────────────────────────────── */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gentlePulse {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes scrollLine {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(16px);
+    opacity: 0;
+  }
+}
+
+/* ─── NAV LINKS ──────────────────────────────────────────────── */
+
+.nav-link {
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(253, 251, 247, 0.7);
+  transition: color 0.2s;
+  letter-spacing: 0.01em;
+}
+
+.nav-link:hover {
+  color: #fff;
+}
+
+.nav-scrolled .nav-link {
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.nav-scrolled .nav-link:hover {
+  color: #1d1d1f;
+}
+
+/* ─── CTA BUTTONS ────────────────────────────────────────────── */
+
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 14px 28px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  letter-spacing: 0.01em;
+}
+
+.cta-primary {
+  background: #03a696;
+  color: #ffffff;
+}
+
+.cta-primary:hover {
+  background: #029486;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(3, 166, 150, 0.25);
+}
+
+.cta-outline {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.cta-outline:hover {
+  border-color: rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.cta-dark {
+  background: #111111;
+  color: #ffffff;
+}
+
+.cta-dark:hover {
+  background: #181818;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* ─── RESPONSIVE ─────────────────────────────────────────────── */
+
+@media (max-width: 1024px) {
+  .partner-cards-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+  .detail-grid-4 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .desktop-nav {
+    display: none !important;
+  }
+  .mobile-trigger {
+    display: flex !important;
+  }
+  .detail-grid-4 {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .detail-grid-3 {
+    grid-template-columns: 1fr !important;
+  }
+  .benefits-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .testimonials-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .partners-layout {
+    grid-template-columns: 1fr !important;
+  }
+  .partner-cards-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .detail-grid-4 {
+    grid-template-columns: 1fr !important;
+  }
+  .partner-cards-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .desktop-nav {
+    display: flex !important;
+  }
+  .mobile-trigger {
+    display: none !important;
+  }
+  .mobile-menu {
+    display: none !important;
+  }
+}

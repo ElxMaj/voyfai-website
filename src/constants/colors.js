@@ -1,0 +1,16 @@
+export const COLORS = {
+  navy: "#111111",
+  navyLight: "#181818",
+  steel: "#1F1F1F",
+  slate: "#6B6B6B",
+  copper: "#03A696",
+  copperLight: "#04C9B4",
+  copperMuted: "rgba(3, 166, 150, 0.08)",
+  cream: "#F7F7F7",
+  warmWhite: "#FFFFFF",
+  sand: "#EBEBEB",
+  text: "#1D1D1F",
+  textMuted: "#86868B",
+  white: "#FFFFFF",
+  border: "rgba(0, 0, 0, 0.06)",
+};
