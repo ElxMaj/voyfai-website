@@ -658,15 +658,42 @@ export default function Home() {
       </section>
 
       {/* ─── INVESTORS ─────────────────────────────────────────── */}
-      <Section bg="#000">
-        <div style={{ textAlign: "center" }}>
+      <section
+        style={{
+          background: COLORS.cream,
+          padding: "96px 24px",
+          position: "relative",
+          overflow: "hidden",
+        }}
+      >
+        {/* Subtle radial glow */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            opacity: 0.5,
+            backgroundImage: `
+              radial-gradient(ellipse 60% 50% at 50% 0%, rgba(3,166,150,0.04) 0%, transparent 70%)
+            `,
+            pointerEvents: "none",
+          }}
+        />
+
+        <div
+          style={{
+            maxWidth: 1280,
+            margin: "0 auto",
+            textAlign: "center",
+            position: "relative",
+          }}
+        >
           <SectionLabel>Investors</SectionLabel>
           <h2
             style={{
               fontFamily: "'Plus Jakarta Sans', sans-serif",
-              fontSize: "clamp(28px, 3.5vw, 38px)",
+              fontSize: "clamp(28px, 3.5vw, 42px)",
               fontWeight: 600,
-              color: COLORS.white,
+              color: COLORS.navy,
               margin: "0 auto 16px",
               lineHeight: 1.25,
               letterSpacing: "-0.02em",
@@ -681,28 +708,39 @@ export default function Home() {
               fontSize: 17,
               fontWeight: 400,
               lineHeight: 1.7,
-              color: "rgba(255,255,255,0.5)",
+              color: COLORS.textMuted,
               maxWidth: 540,
-              margin: "0 auto 48px",
+              margin: "0 auto 64px",
             }}
           >
             All our investors have long proven track records of picking the
             winners across different industries.
           </p>
+
+          {/* Thin separator line */}
+          <div
+            style={{
+              width: 48,
+              height: 1,
+              background: COLORS.sand,
+              margin: "0 auto 64px",
+            }}
+          />
+
           <div
             style={{
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              gap: 64,
+              gap: 80,
               flexWrap: "wrap",
             }}
           >
             {[
-              { src: atlanticLabsLogo, alt: "Atlantic Labs", height: 28 },
-              { src: heartcoreLogo, alt: "Heartcore", height: 28 },
-              { src: earlybirdLogo, alt: "Earlybird", height: 32 },
-              { src: blisceLogo, alt: "blisce", height: 22 },
+              { src: atlanticLabsLogo, alt: "Atlantic Labs", height: 48 },
+              { src: heartcoreLogo, alt: "Heartcore", height: 48 },
+              { src: earlybirdLogo, alt: "Earlybird", height: 52 },
+              { src: blisceLogo, alt: "blisce", height: 40 },
             ].map((logo) => (
               <img
                 key={logo.alt}
@@ -711,14 +749,16 @@ export default function Home() {
                 style={{
                   height: logo.height,
                   objectFit: "contain",
-                  opacity: 0.7,
-                  filter: "brightness(0) invert(1)",
+                  opacity: 0.45,
+                  transition: "opacity 0.3s ease",
                 }}
+                onMouseEnter={(e) => (e.currentTarget.style.opacity = 0.75)}
+                onMouseLeave={(e) => (e.currentTarget.style.opacity = 0.45)}
               />
             ))}
           </div>
         </div>
-      </Section>
+      </section>
     </>
   );
 }
