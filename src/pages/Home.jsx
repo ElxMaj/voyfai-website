@@ -749,11 +749,12 @@ export default function Home() {
                 style={{
                   height: logo.height,
                   objectFit: "contain",
-                  opacity: 0.45,
+                  opacity: 0.7,
+                  filter: "brightness(0)",
                   transition: "opacity 0.3s ease",
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.opacity = 0.75)}
-                onMouseLeave={(e) => (e.currentTarget.style.opacity = 0.45)}
+                onMouseEnter={(e) => (e.currentTarget.style.opacity = 1)}
+                onMouseLeave={(e) => (e.currentTarget.style.opacity = 0.7)}
               />
             ))}
           </div>
