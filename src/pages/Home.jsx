@@ -740,7 +740,7 @@ export default function Home() {
               { src: atlanticLabsLogo, alt: "Atlantic Labs", height: 48 },
               { src: heartcoreLogo, alt: "Heartcore", height: 48 },
               { src: earlybirdLogo, alt: "Earlybird", height: 52 },
-              { src: blisceLogo, alt: "blisce", height: 40 },
+              { src: blisceLogo, alt: "blisce", height: 55 },
             ].map((logo) => (
               <img
                 key={logo.alt}
