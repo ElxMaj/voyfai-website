@@ -8,6 +8,10 @@ import DetailSection from "../components/DetailSection";
 import TestimonialCard from "../components/TestimonialCard";
 import NorthernEuropeMap from "../components/NorthernEuropeMap";
 import heroImg from "../assets/Voyfai-hero.jpg";
+import atlanticLabsLogo from "../assets/1-Atlantic-Labs.webp";
+import heartcoreLogo from "../assets/2-Heartcore.svg";
+import earlybirdLogo from "../assets/3-Earlybird.svg";
+import blisceLogo from "../assets/4-blisce.png";
 
 export default function Home() {
   return (
@@ -652,6 +656,41 @@ export default function Home() {
           </p>
         </div>
       </section>
+
+      {/* ─── INVESTORS ─────────────────────────────────────────── */}
+      <Section bg={COLORS.cream}>
+        <div style={{ textAlign: "center" }}>
+          <SectionLabel>Investors</SectionLabel>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 64,
+              flexWrap: "wrap",
+              marginTop: 32,
+            }}
+          >
+            {[
+              { src: atlanticLabsLogo, alt: "Atlantic Labs", height: 28 },
+              { src: heartcoreLogo, alt: "Heartcore", height: 28 },
+              { src: earlybirdLogo, alt: "Earlybird", height: 32 },
+              { src: blisceLogo, alt: "blisce", height: 22 },
+            ].map((logo) => (
+              <img
+                key={logo.alt}
+                src={logo.src}
+                alt={logo.alt}
+                style={{
+                  height: logo.height,
+                  objectFit: "contain",
+                  opacity: 0.7,
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      </Section>
     </>
   );
 }
