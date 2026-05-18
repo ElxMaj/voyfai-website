@@ -2,13 +2,24 @@ import { lazy, Suspense, useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import { initCookieConsent } from "./lib/cookieConsent";
+import Home from "./pages/Home";
 
-const Home = lazy(() => import("./pages/Home"));
 const Careers = lazy(() => import("./pages/Careers"));
 const CareerDetail = lazy(() => import("./pages/CareerDetail"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const Imprint = lazy(() => import("./pages/Imprint"));
+
+function RouteFallback() {
+  return (
+    <main
+      aria-busy="true"
+      style={{
+        minHeight: "100svh",
+        background: "#000000",
+      }}
+    />
+  );
+}
 
 function ScrollToLocation() {
   const { pathname, hash } = useLocation();
@@ -35,7 +46,19 @@ function ScrollToLocation() {
 
 export default function App() {
   useEffect(() => {
-    initCookieConsent();
+    const loadConsent = () => {
+      import("./lib/cookieConsent").then(({ initCookieConsent }) => {
+        initCookieConsent();
+      });
+    };
+
+    if ("requestIdleCallback" in window) {
+      const idleId = window.requestIdleCallback(loadConsent, { timeout: 2400 });
+      return () => window.cancelIdleCallback(idleId);
+    }
+
+    const timeoutId = window.setTimeout(loadConsent, 1200);
+    return () => window.clearTimeout(timeoutId);
   }, []);
 
   return (
@@ -51,7 +74,7 @@ export default function App() {
         }}
       >
         <Navbar />
-        <Suspense fallback={null}>
+        <Suspense fallback={<RouteFallback />}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/careers" element={<Careers />} />

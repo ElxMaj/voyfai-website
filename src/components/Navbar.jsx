@@ -76,6 +76,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link
             to="/"
+            aria-label="Voyfai home"
             style={{
               textDecoration: "none",
               display: "flex",

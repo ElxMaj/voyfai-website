@@ -216,6 +216,31 @@ body {
   }
 }
 
+@keyframes heroAccentReveal {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* ─── HOME HERO / PARTNER STATS ─────────────────────────────── */
+
+.hero-accent-line {
+  animation: heroAccentReveal 700ms var(--ease-voyfai) 200ms both;
+}
+
+.partner-stat-divider {
+  display: block;
+  transform: scaleX(0);
+  transition: transform 800ms var(--ease-out);
+}
+
+.reveal[data-in="true"] .partner-stat-divider {
+  transform: scaleX(1);
+}
+
 /* ─── REVEAL (scroll-in) ─────────────────────────────────────── */
 
 .reveal {
@@ -312,12 +337,12 @@ body {
 }
 
 .cta-primary {
-  background: #03a696;
+  background: #027d72;
   color: #ffffff;
 }
 
 .cta-primary:hover {
-  background: #029486;
+  background: #026f66;
   transform: translateY(-1px);
   box-shadow: var(--shadow-copper);
 }
@@ -444,7 +469,7 @@ body {
 .footer-link {
   font-family: var(--font-body);
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.58);
   text-decoration: none;
   transition: color 200ms ease;
   padding: 4px 2px;
@@ -462,7 +487,7 @@ body {
 
 .footer-link-quiet {
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .footer-link-quiet:hover {

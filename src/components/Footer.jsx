@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { COLORS } from "../constants/colors";
-import { showCookiePreferences } from "../lib/cookieConsent";
 
 const navLinks = [
   { label: "Benefits", hash: "#benefits" },
@@ -15,6 +14,12 @@ const legalLinks = [
 ];
 
 export default function Footer() {
+  const openCookiePreferences = () => {
+    import("../lib/cookieConsent").then(({ showCookiePreferences }) => {
+      showCookiePreferences();
+    });
+  };
+
   return (
     <footer
       style={{
@@ -73,7 +78,7 @@ export default function Footer() {
             style={{
               fontFamily: "var(--font-body)",
               fontSize: 13,
-              color: "rgba(255,255,255,0.35)",
+              color: "rgba(255,255,255,0.58)",
               maxWidth: 320,
               lineHeight: 1.6,
             }}
@@ -122,7 +127,7 @@ export default function Footer() {
             style={{
               fontFamily: "var(--font-body)",
               fontSize: 12,
-              color: "rgba(255,255,255,0.2)",
+              color: "rgba(255,255,255,0.5)",
             }}
           >
             &copy; {new Date().getFullYear()} Voyfai. All rights reserved.
@@ -150,7 +155,7 @@ export default function Footer() {
                 <button
                   key={link.label}
                   type="button"
-                  onClick={showCookiePreferences}
+                  onClick={openCookiePreferences}
                   className="footer-link footer-link-quiet footer-link-button"
                 >
                   {link.label}

@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { COLORS } from "../constants/colors";
 import { Icons } from "../constants/icons";
 import Section from "../components/Section";
@@ -12,7 +12,6 @@ import useReducedMotion from "../hooks/useReducedMotion";
 
 const HERO_BASE = `${import.meta.env.BASE_URL}hero`;
 import atlanticLabsLogo from "../assets/1-Atlantic-Labs.webp";
-import { motion } from "motion/react";
 import CountUp from "../components/motion/CountUp";
 import heartcoreLogo from "../assets/2-Heartcore.svg";
 import earlybirdLogo from "../assets/3-Earlybird.svg";
@@ -29,6 +28,67 @@ const BenchmarkChart = lazy(() => import("../components/sections/BenchmarkChart"
 const CustomsFlow = lazy(() => import("../components/sections/CustomsFlow"));
 const HubPreview = lazy(() => import("../components/sections/HubPreview"));
 const ComplianceBand = lazy(() => import("../components/sections/ComplianceBand"));
+
+function LoadWhenNear({
+  children,
+  minHeight = 0,
+  background = "transparent",
+  idleTimeout = 5000,
+  rootMargin = "900px 0px",
+}) {
+  const ref = useRef(null);
+  const [shouldLoad, setShouldLoad] = useState(false);
+
+  useEffect(() => {
+    if (shouldLoad) return;
+    const node = ref.current;
+    if (!node) return;
+
+    if (typeof IntersectionObserver === "undefined") {
+      setShouldLoad(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldLoad(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin, threshold: 0 }
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [rootMargin, shouldLoad]);
+
+  useEffect(() => {
+    if (shouldLoad) return;
+
+    const load = () => setShouldLoad(true);
+    let idleId;
+
+    const timeoutId = window.setTimeout(() => {
+      if ("requestIdleCallback" in window) {
+        idleId = window.requestIdleCallback(load, { timeout: 1000 });
+        return;
+      }
+      load();
+    }, idleTimeout);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+      if (idleId) window.cancelIdleCallback(idleId);
+    };
+  }, [idleTimeout, shouldLoad]);
+
+  return (
+    <div ref={ref} style={shouldLoad ? undefined : { minHeight, background }}>
+      {shouldLoad ? children : null}
+    </div>
+  );
+}
 
 export default function Home() {
   const reducedMotion = useReducedMotion();
@@ -121,30 +181,22 @@ export default function Home() {
               fontWeight: 700,
               color: COLORS.white,
               lineHeight: 1.1,
-              margin: "0 0 8px",
-              letterSpacing: "-0.02em",
-            }}
-          >
-            Independent Freight
-            <br />
-            Forwarders.
-          </h1>
-          <motion.h1
-            initial={reducedMotion ? { opacity: 0 } : { clipPath: "inset(0 100% 0 0)" }}
-            animate={reducedMotion ? { opacity: 1 } : { clipPath: "inset(0 0% 0 0)" }}
-            transition={{ duration: reducedMotion ? 0.2 : 0.7, delay: 0.2, ease: [0.6, 0.01, 0.05, 1] }}
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "clamp(38px, 5.8vw, 68px)",
-              fontWeight: 700,
-              color: COLORS.copperLight,
-              lineHeight: 1.1,
               margin: "0 0 36px",
               letterSpacing: "-0.02em",
             }}
           >
-            Stronger Together.
-          </motion.h1>
+            <span style={{ display: "block", marginBottom: 8 }}>
+              Independent Freight
+              <br />
+              Forwarders.
+            </span>
+            <span
+              className={reducedMotion ? undefined : "hero-accent-line"}
+              style={{ display: "block", color: COLORS.copperLight }}
+            >
+              Stronger Together.
+            </span>
+          </h1>
 
           <p
             style={{
@@ -381,12 +433,15 @@ export default function Home() {
                     </div>
                     {/* Animated divider */}
                     <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 1, background: "rgba(0,0,0,0.06)" }}>
-                      <motion.div
-                        initial={{ scaleX: 0 }}
-                        whileInView={{ scaleX: 1 }}
-                        viewport={{ once: true, margin: "-10%" }}
-                        transition={{ duration: 0.8, delay: i * 0.1, ease: "easeOut" }}
-                        style={{ width: "100%", height: "100%", background: "var(--voyfai-teal)", transformOrigin: "left" }}
+                      <div
+                        className="partner-stat-divider"
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          background: "var(--voyfai-teal)",
+                          transformOrigin: "left",
+                          transitionDelay: `${i * 100}ms`,
+                        }}
                       />
                     </div>
                   </div>
@@ -407,59 +462,77 @@ export default function Home() {
           </div>
 
           <div style={{ paddingTop: 16 }}>
-            <Suspense fallback={null}>
-              <NorthernEuropeMap />
-            </Suspense>
+            <LoadWhenNear minHeight={360} rootMargin="700px 0px">
+              <Suspense fallback={null}>
+                <NorthernEuropeMap />
+              </Suspense>
+            </LoadWhenNear>
           </div>
         </div>
         </Reveal>
       </Section>
 
-      <Suspense fallback={null}>
-        <BenchmarkChart />
-      </Suspense>
+      <LoadWhenNear minHeight={380} background="var(--voyfai-ink)">
+        <Suspense fallback={null}>
+          <BenchmarkChart />
+        </Suspense>
+      </LoadWhenNear>
 
       {/* ─── TECHNOLOGY ─────────────────────────────────────────── */}
-      <Suspense fallback={null}>
-        <DetailSection
-          id="technology"
-          bg={COLORS.cream}
-          label="AI Technology"
-          title="Tools built by forwarders, for forwarders"
-          items={[
-            {
-              graphic: <RateCompare />,
-              title: "Instant Rate Comparison",
-              description:
-                "Compare carrier options in seconds and deliver accurate quotes within minutes. Operators spend time on relationships, not spreadsheets.",
-            },
-            {
-              graphic: <ShipmentIntake />,
-              title: "Automated Shipment Creation",
-              description:
-                "Our AI agent converts booking emails directly into structured shipments in the TMS, reducing manual data entry and eliminating errors.",
-            },
-            {
-              graphic: <HubTracker />,
-              title: "Voyfai Hub: Live Visibility",
-              description:
-                "A client portal that keeps clients continuously informed with smart alerts, automated updates, and full shipment transparency from origin to destination.",
-            },
-            {
-              graphic: <CustomsScan />,
-              title: "Intelligent Customs Automation",
-              description:
-                "Streamline customs declarations with AI that classifies HS codes and processes documents, improving both speed and accuracy.",
-            },
-          ]}
-        />
-      </Suspense>
+      <LoadWhenNear minHeight={820} background={COLORS.cream}>
+        <Suspense fallback={null}>
+          <DetailSection
+            id="technology"
+            bg={COLORS.cream}
+            label="AI Technology"
+            title="Tools built by forwarders, for forwarders"
+            items={[
+              {
+                graphic: <RateCompare />,
+                title: "Instant Rate Comparison",
+                description:
+                  "Compare carrier options in seconds and deliver accurate quotes within minutes. Operators spend time on relationships, not spreadsheets.",
+              },
+              {
+                graphic: <ShipmentIntake />,
+                title: "Automated Shipment Creation",
+                description:
+                  "Our AI agent converts booking emails directly into structured shipments in the TMS, reducing manual data entry and eliminating errors.",
+              },
+              {
+                graphic: <HubTracker />,
+                title: "Voyfai Hub: Live Visibility",
+                description:
+                  "A client portal that keeps clients continuously informed with smart alerts, automated updates, and full shipment transparency from origin to destination.",
+              },
+              {
+                graphic: <CustomsScan />,
+                title: "Intelligent Customs Automation",
+                description:
+                  "Streamline customs declarations with AI that classifies HS codes and processes documents, improving both speed and accuracy.",
+              },
+            ]}
+          />
+        </Suspense>
+      </LoadWhenNear>
 
-      <Suspense fallback={null}>
-        <CustomsFlow />
-        <HubPreview />
-        <ComplianceBand />
-      </Suspense>
+      <LoadWhenNear minHeight={620} background="var(--voyfai-ink)">
+        <Suspense fallback={null}>
+          <CustomsFlow />
+        </Suspense>
+      </LoadWhenNear>
+
+      <LoadWhenNear minHeight={720} background="var(--voyfai-surface-page)">
+        <Suspense fallback={null}>
+          <HubPreview />
+        </Suspense>
+      </LoadWhenNear>
+
+      <LoadWhenNear minHeight={96} background="var(--voyfai-ink)">
+        <Suspense fallback={null}>
+          <ComplianceBand />
+        </Suspense>
+      </LoadWhenNear>
 
       {/* ─── TESTIMONIALS ───────────────────────────────────────── */}
       <Section bg={COLORS.warmWhite}>
@@ -620,6 +693,8 @@ export default function Home() {
                   width={logo.width}
                   height={logo.height}
                   className="investor-logo"
+                  loading="lazy"
+                  decoding="async"
                   style={{
                     height: logo.height,
                     objectFit: "contain",

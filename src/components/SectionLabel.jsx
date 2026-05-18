@@ -9,7 +9,7 @@ export default function SectionLabel({ children }) {
         fontWeight: 500,
         letterSpacing: "0.08em",
         textTransform: "uppercase",
-        color: COLORS.copper,
+        color: COLORS.copperText,
         marginBottom: 12,
       }}
     >

@@ -45,7 +45,7 @@ export default function BenefitCard({ icon, title, subtitle, description, items 
           fontFamily: "var(--font-body)",
           fontSize: 15,
           fontWeight: 400,
-          color: COLORS.copper,
+          color: COLORS.copperText,
           margin: "0 0 16px",
           fontStyle: "italic",
         }}

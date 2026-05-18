@@ -105,7 +105,7 @@ export default function DarkCTA({
             style={{
               fontFamily: "var(--font-body)",
               fontSize: 13,
-              color: "rgba(255,255,255,0.3)",
+              color: "rgba(255,255,255,0.58)",
               marginTop: 24,
             }}
           >
