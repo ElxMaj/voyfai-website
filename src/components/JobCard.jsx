@@ -84,7 +84,7 @@ export default function JobCard({ job }) {
           </span>
           {formatEmploymentType(job.employmentType)}
         </span>
-        {job.isRemote && (
+        {job.workplaceType && job.workplaceType !== "OnSite" && (
           <span
             style={{
               fontSize: 11,
@@ -97,7 +97,7 @@ export default function JobCard({ job }) {
               textTransform: "uppercase",
             }}
           >
-            Remote
+            {job.workplaceType === "Hybrid" ? "Hybrid" : "Remote"}
           </span>
         )}
       </div>

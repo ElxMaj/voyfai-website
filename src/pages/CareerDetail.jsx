@@ -236,7 +236,11 @@ export default function CareerDetail() {
               {formatEmploymentType(job.employmentType)}
             </Pill>
             {job.team && job.team !== job.department && <Pill>{job.team}</Pill>}
-            {job.isRemote && <Pill tone="accent">Remote friendly</Pill>}
+            {job.workplaceType && job.workplaceType !== "OnSite" && (
+              <Pill tone="accent">
+                {job.workplaceType === "Hybrid" ? "Hybrid" : "Remote friendly"}
+              </Pill>
+            )}
           </div>
         </div>
       </header>
