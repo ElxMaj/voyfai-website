@@ -1304,13 +1304,16 @@ body {
   color: #ffffff;
   display: flex;
   justify-content: center;
-  min-height: 82vh;
+  /* Content-driven height. The old `min-height: 82vh` left a tall dark void
+     around the diagram at 1300px+ viewports — neighbors bled into frame
+     during scroll. Padding scales with viewport but never balloons. */
+  padding: clamp(96px, 12vh, 160px) 24px;
   overflow: hidden;
   position: relative;
 }
 
 .customs-flow-heading {
-  margin-bottom: 112px;
+  margin-bottom: clamp(64px, 7vh, 112px);
   text-align: center;
 }
 
@@ -2163,3 +2166,4 @@ body {
     transition: grid-template-rows 200ms ease !important;
   }
 }
+
