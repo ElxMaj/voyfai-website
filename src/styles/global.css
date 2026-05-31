@@ -1304,9 +1304,7 @@ body {
   color: #ffffff;
   display: flex;
   justify-content: center;
-  /* Content-driven height. The old `min-height: 82vh` left a tall dark void
-     around the diagram at 1300px+ viewports — neighbors bled into frame
-     during scroll. Padding scales with viewport but never balloons. */
+  min-height: 100svh;
   padding: clamp(96px, 12vh, 160px) 24px;
   overflow: hidden;
   position: relative;
@@ -2055,6 +2053,9 @@ body {
   .interview-stepper-track {
     display: none;
   }
+  .founders-grid {
+    grid-template-columns: repeat(2, minmax(0, 380px)) !important;
+  }
 }
 
 @media (max-width: 900px) {
@@ -2166,4 +2167,3 @@ body {
     transition: grid-template-rows 200ms ease !important;
   }
 }
-

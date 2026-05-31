@@ -24,6 +24,13 @@ const FOUNDERS = [
     photo: "/images/careers/founder-james.jpg",
     linkedin: "https://www.linkedin.com/in/james-maund-869b68127/",
   },
+  {
+    name: "Jonas Kulessa",
+    role: "Co-Founder & CTO",
+    initials: "JK",
+    photo: "/images/careers/founder-jonas.jpg",
+    linkedin: "https://www.linkedin.com/in/jonas-kulessa/",
+  },
 ];
 
 const INVESTORS = [
@@ -74,7 +81,7 @@ export default function FoundersAndInvestors() {
                 href={f.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="lift-card founder-card-link"
+                className="lift-card founder-card-link founder-card-stack"
                 style={{ ...styles.founderCard, textDecoration: "none" }}
                 aria-label={`${f.name} on LinkedIn`}
               >
@@ -146,8 +153,8 @@ const styles = {
   },
   foundersGrid: {
     display: "grid",
-    gridTemplateColumns: "repeat(2, minmax(0, 380px))",
-    gap: 24,
+    gridTemplateColumns: "repeat(3, minmax(0, 380px))",
+    gap: 20,
     justifyContent: "center",
   },
   founderCard: {

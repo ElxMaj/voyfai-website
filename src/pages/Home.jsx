@@ -84,7 +84,7 @@ function LoadWhenNear({
   }, [idleTimeout, shouldLoad]);
 
   return (
-    <div ref={ref} style={shouldLoad ? undefined : { minHeight, background }}>
+    <div ref={ref} style={{ minHeight, background }}>
       {shouldLoad ? children : null}
     </div>
   );
@@ -479,7 +479,7 @@ export default function Home() {
       </LoadWhenNear>
 
       {/* ─── TECHNOLOGY ─────────────────────────────────────────── */}
-      <LoadWhenNear minHeight={820} background={COLORS.cream}>
+      <LoadWhenNear minHeight={1040} background={COLORS.cream}>
         <Suspense fallback={null}>
           <DetailSection
             id="technology"

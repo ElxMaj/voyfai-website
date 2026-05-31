@@ -27,16 +27,20 @@ export default function CustomsFlow() {
 
     if (!canPin) return;
 
+    let cleanupRefresh = () => {};
+
     const ctx = gsap.context(() => {
       gsap.set(activeLineRef.current, { scaleX: 0, transformOrigin: "left center" });
 
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
-          start: "center center",
+          start: "top top",
           end: "+=20%",
           pin: true,
           scrub: 0.5,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
         },
       });
 
@@ -56,9 +60,33 @@ export default function CustomsFlow() {
           duration: 0.1,
         }, nodeProgress - 0.05);
       });
+
+      let refreshFrame;
+      const refresh = () => {
+        cancelAnimationFrame(refreshFrame);
+        refreshFrame = requestAnimationFrame(() => ScrollTrigger.refresh());
+      };
+      const refreshTimers = [80, 300, 900, 1800].map((delay) =>
+        window.setTimeout(refresh, delay)
+      );
+
+      document.fonts?.ready?.then(refresh);
+      window.addEventListener("load", refresh, { once: true });
+      window.addEventListener("resize", refresh);
+      refresh();
+
+      cleanupRefresh = () => {
+        cancelAnimationFrame(refreshFrame);
+        refreshTimers.forEach((timer) => window.clearTimeout(timer));
+        window.removeEventListener("load", refresh);
+        window.removeEventListener("resize", refresh);
+      };
     }, containerRef);
 
-    return () => ctx.revert();
+    return () => {
+      cleanupRefresh();
+      ctx.revert();
+    };
   }, []);
 
   return (
